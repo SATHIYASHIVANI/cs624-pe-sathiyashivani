@@ -5,9 +5,9 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback, ScrollView } from 're
 import CenterMessage from '../components/CenterMessage'
 import { colors } from '../theme'
 
-export default class Cities extends React.Component {
+export default class Countries extends React.Component {
   static navigationOptions = {
-    title: 'Cities',
+    title: 'Countries',
     headerTitleStyle: {
       color: 'white',
       fontSize: 20,
@@ -15,23 +15,23 @@ export default class Cities extends React.Component {
     }
   }
   navigate = (item) => {
-    this.props.navigation.navigate('City', { city: item })
+    this.props.navigation.navigate('country', { country: item })
   }
   render() {
-    const {  cities  } = this.props.route.params;
-    console.log(cities);
+    const {  countries  } = this.props.route.params;
+    console.log(countries);
     return (
-      <ScrollView  contentContainerStyle={[!cities.length && { flex: 1 }]}>
-        <View style={[!cities.length && { justifyContent: 'center', flex: 1 }]}>
+      <ScrollView  contentContainerStyle={[!countries.length && { flex: 1 }]}>
+        <View style={[!countries.length && { justifyContent: 'center', flex: 1 }]}>
           {
-            !cities.length && <CenterMessage message='No saved cities!' />
+            !countries.length && <CenterMessage message='No saved countries!' />
           }
           {
-            cities.map((item, index) => (
+            countries.map((item, index) => (
               <TouchableWithoutFeedback onPress={() => this.navigate(item)} key={index} >
                 <View style={styles.cityContainer}>
-                  <Text style={styles.city}>{item.city}</Text>
-                  <Text style={styles.country}>{item.country}</Text>
+                  <Text style={styles.city}>{item.country}</Text>
+                  <Text style={styles.country}>{item.currency}</Text>
                 </View>
               </TouchableWithoutFeedback>
             ))

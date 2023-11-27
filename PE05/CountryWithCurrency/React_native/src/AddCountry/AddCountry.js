@@ -10,56 +10,53 @@ import {
 import 'react-native-get-random-values';
 import { v4 as uuidV4} from 'uuid';
 import { colors } from '../theme'
-import Cities from '../Cities/Cities';
 
-export default class AddCity extends React.Component {
+export default class AddCountry extends React.Component {
   state = {
-    city: '',
     country: '',
+    currency: '',
   }
   onChangeText = (key, value) => {
     this.setState({ [key]: value })
   }
   submit = () => {
-    if (this.state.city === '' || this.state.country === '') {
+    if (this.state.currency === '' || this.state.country === '') {
       alert('please complete form')
     }
-    const city = {
-      city: this.state.city,
+    const country = {
       country: this.state.country,
+      currency: this.state.currency,
       id: uuidV4(),
       locations: []
     }
     //this.props.screenProps.addCity(city)
-    console.log(city);
-    this.props.route.params.addCity(city)
-    console.log(Cities.city);
+    this.props.route.params.addCountry(country)
     this.setState({
-      city: '',
-      country: ''
+      country: '',
+      currency: ''
     }, () => {
-      this.props.navigation.navigate('Cities',city)
+      this.props.navigation.navigate('Countries')
     })
   }
   render() {   
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Cities</Text>
-        <TextInput
-          placeholder='City name'
-          onChangeText={val => this.onChangeText('city', val)}
-          style={styles.input}
-          value={this.state.city}
-        />
+        <Text style={styles.heading}>Country</Text>
         <TextInput
           placeholder='Country name'
           onChangeText={val => this.onChangeText('country', val)}
           style={styles.input}
           value={this.state.country}
         />
+        <TextInput
+          placeholder='Currency'
+          onChangeText={val => this.onChangeText('currency', val)}
+          style={styles.input}
+          value={this.state.currency}
+        />
         <TouchableOpacity onPress={this.submit}>
           <View style={styles.button}>
-            <Text style={styles.buttonText}>Add City</Text>
+            <Text style={styles.buttonText}>Add Country</Text>
           </View>
         </TouchableOpacity>
       </View>

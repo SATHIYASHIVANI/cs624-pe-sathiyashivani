@@ -7,6 +7,9 @@ import { LogBox } from 'react-native';
 import Cities from './src/Cities/Cities'
 import City from './src/Cities/city';
 import AddCity from './src/AddCity/AddCity';
+import Countries from './src/Countries/Countries'
+import Country from './src/Countries/country';
+import AddCountry from './src/AddCountry/AddCountry';
 import { colors } from './src/theme'
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -35,15 +38,39 @@ function CitiesStackScreen ({navigation, route}){
     );
 }
 
+function CountriesStackScreen ({navigation, route}){
+  return (
+    <Stack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: colors.primary
+      },
+      headerTintColor: '#fff'
+    }}>
+    <Stack.Screen name="Countries" component={Countries} initialParams={{
+      countries: route.params.countries,
+      addcountry: route.params.addcountry}} />
+    <Stack.Screen name="country" component={Country} initialParams={{
+      countries: route.params.countries,
+      addcountry: route.params.addcountry}}/>
+    </Stack.Navigator>
+  );
+}
+
 export default class App extends Component {
   state = {
-    cities: []
-
+    cities: [],
+    countries:[]
   }
   addCity = (city) => {
+    console.log(city);
     const cities = this.state.cities
     cities.push(city)
     this.setState({ cities })
+  }
+  addCountry = (country) => {
+    const countries = this.state.countries
+    countries.push(country)
+    this.setState({ countries })
   }
   addLocation = (location, city) => {
     const index = this.state.cities.findIndex(item => {
@@ -64,8 +91,10 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="CitiesNav" initialParams={{cities: this.state.cities,addCity: this.addCity,addLocation: this.addLocation}} component={CitiesStackScreen} />
+          <Tab.Screen name="Cities" initialParams={{cities: this.state.cities,addCity: this.addCity,addLocation: this.addLocation}} component={CitiesStackScreen} />
           <Tab.Screen name="AddCity"   initialParams={{cities: this.state.cities,addCity: this.addCity,addLocation: this.addLocation}} component={AddCity} />
+          <Tab.Screen name="Countries" initialParams={{countries: this.state.countries,addCountry: this.addCountry}} component={CountriesStackScreen} />
+          <Tab.Screen name="AddCountry"  initialParams={{countries: this.state.countries,addCountry: this.addCountry}} component={AddCountry} />
         </Tab.Navigator>
       </NavigationContainer>
     );
