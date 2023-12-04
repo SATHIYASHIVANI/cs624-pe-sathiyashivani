@@ -19,7 +19,7 @@ export default class Countries extends React.Component {
   }
   render() {
     const {  countries  } = this.props.route.params;
-    console.log(countries);
+    console.log(countries.length);
     return (
       <ScrollView  contentContainerStyle={[!countries.length && { flex: 1 }]}>
         <View style={[!countries.length && { justifyContent: 'center', flex: 1 }]}>

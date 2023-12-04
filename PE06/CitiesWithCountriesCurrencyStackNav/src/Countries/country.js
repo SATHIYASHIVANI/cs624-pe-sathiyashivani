@@ -5,11 +5,11 @@ import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback, TextInput
 import CenterMessage from '../components/CenterMessage'
 import { colors } from '../theme'
 
-class City extends React.Component {
+class Country extends React.Component {
   static navigationOptions = (props) => {
-    const { city } = props.route.params
+    const { country } = props.route.params
     return {
-      title: city.city,
+      title: country.country,
       headerTitleStyle: {
         color: 'white',
         fontSize: 20,
@@ -26,31 +26,31 @@ class City extends React.Component {
       [key]: value
     })
   }
-  addLocation = () => {
+  addCurrency = () => {
     if (this.state.name === '' || this.state.info === '') return
-    const { city } = this.props.route.params
-    const location = {
+    const { country } = this.props.route.params
+    const currency = {
       name: this.state.name,
       info: this.state.info
     }
-    this.props.route.params.addLocation(location, city)
+    this.props.route.params.addCurrency(currency, country)
     this.setState({ name: '', info: '' })
   }
   render() {
-    const { city } = this.props.route.params
+    const { country } = this.props.route.params
     console.log('props: ', this.props)
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={[!city.locations.length && { flex: 1 }]}>
-          <View style={[styles.locationsContainer, !city.locations.length && { flex: 1, justifyContent: 'center' }]}>
+        <ScrollView contentContainerStyle={[!country.currency.length && { flex: 1 }]}>
+          <View style={[styles.locationsContainer, !country.currency.length && { flex: 1, justifyContent: 'center' }]}>
             {
-              !city.locations.length && <CenterMessage message='No locations for this country!' />
+              !country.currency.length && <CenterMessage message='No Cuurency for this country!' />
             }
             {
-              city.locations.map((location, index) => (
+              country.currency.map((currency, index) => (
                 <View key={index} style={styles.locationContainer}>
-                  <Text style={styles.locationName}>{location.name}</Text>
-                  <Text style={styles.locationInfo}>{location.info}</Text>
+                  <Text style={styles.locationName}>{currency.name}</Text>
+                  <Text style={styles.locationInfo}>{currency.info}</Text>
                 </View>
               ))
             }
@@ -58,22 +58,22 @@ class City extends React.Component {
         </ScrollView>
         <TextInput
           onChangeText={val => this.onChangeText('name', val)}
-          placeholder='Location name'
+          placeholder='Currency name'
           value={this.state.name}
           style={styles.input}
-          placeholderTextColor='white'
+          placeholderTextColor='black'
         />
         <TextInput
           onChangeText={val => this.onChangeText('info', val)}
-          placeholder='Location info'
+          placeholder='Currency info'
           value={this.state.info}
           style={[styles.input, styles.input2]}
-          placeholderTextColor='white'
+          placeholderTextColor='black'
         />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={this.addLocation}>
+          <TouchableOpacity onPress={this.addCurrency}>
             <View style={styles.button}>
-              <Text style={styles.buttonText}>Add Location</Text>
+              <Text style={styles.buttonText}>Add Currency</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default City
+export default Country

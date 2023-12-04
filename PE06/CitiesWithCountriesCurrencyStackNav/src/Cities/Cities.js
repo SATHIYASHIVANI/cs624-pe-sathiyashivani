@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback, ScrollView } from 're
 import CenterMessage from '../components/CenterMessage'
 import { colors } from '../theme'
 
-export default class Cities extends React.Component {
+class Cities extends React.Component {
   static navigationOptions = {
     title: 'Cities',
     headerTitleStyle: {
@@ -19,7 +19,7 @@ export default class Cities extends React.Component {
   }
   render() {
     const {  cities  } = this.props.route.params;
-    console.log(cities);
+    console.log('inside Cities jsm',cities.length);
     return (
       <ScrollView  contentContainerStyle={[!cities.length && { flex: 1 }]}>
         <View style={[!cities.length && { justifyContent: 'center', flex: 1 }]}>
@@ -54,3 +54,5 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, .5)'
   },  
 })
+
+export default Cities;

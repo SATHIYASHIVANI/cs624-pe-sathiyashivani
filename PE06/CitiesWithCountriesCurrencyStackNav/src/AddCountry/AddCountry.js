@@ -44,12 +44,14 @@ export default class AddCountry extends React.Component {
         <Text style={styles.heading}>Country</Text>
         <TextInput
           placeholder='Country name'
+          placeholderTextColor='black'
           onChangeText={val => this.onChangeText('country', val)}
           style={styles.input}
           value={this.state.country}
         />
         <TextInput
           placeholder='Currency'
+          placeholderTextColor='black'
           onChangeText={val => this.onChangeText('currency', val)}
           style={styles.input}
           value={this.state.currency}

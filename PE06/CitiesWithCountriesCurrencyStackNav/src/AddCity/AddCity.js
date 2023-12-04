@@ -31,14 +31,14 @@ export default class AddCity extends React.Component {
       locations: []
     }
     //this.props.screenProps.addCity(city)
-    console.log(city);
     this.props.route.params.addCity(city)
-    console.log(Cities.city);
+    //console.log(Cities.city);
     this.setState({
       city: '',
       country: ''
     }, () => {
-      this.props.navigation.navigate('Cities',city)
+      console.log(city);
+      this.props.navigation.navigate('Cities')
     })
   }
   render() {   
@@ -47,12 +47,14 @@ export default class AddCity extends React.Component {
         <Text style={styles.heading}>Cities</Text>
         <TextInput
           placeholder='City name'
+          placeholderTextColor={'black'}
           onChangeText={val => this.onChangeText('city', val)}
           style={styles.input}
           value={this.state.city}
         />
         <TextInput
           placeholder='Country name'
+          placeholderTextColor={'black'}
           onChangeText={val => this.onChangeText('country', val)}
           style={styles.input}
           value={this.state.country}

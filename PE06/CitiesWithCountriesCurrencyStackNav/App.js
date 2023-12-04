@@ -17,8 +17,10 @@ LogBox.ignoreLogs([
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-function CitiesStackScreen ({navigation, route}){
+const Stack1 = createNativeStackNavigator();
+function CitiesStackScreen ({navigation, route})
+{
+  console.log(route.params.cities);
     return (
       <Stack.Navigator screenOptions={{
         headerStyle: {
@@ -26,7 +28,7 @@ function CitiesStackScreen ({navigation, route}){
         },
         headerTintColor: '#fff'
       }}>
-      <Stack.Screen name="Cities" component={Cities} initialParams={{
+      <Stack.Screen name="CitiesMain" component={Cities} initialParams={{
         cities: route.params.cities,
         addCity: route.params.addCity,
         addLocation: route.params.addLocation}} />
@@ -38,7 +40,8 @@ function CitiesStackScreen ({navigation, route}){
     );
 }
 
-function CountriesStackScreen ({navigation, route}){
+function CountriesStackScreen ({navigation, route})
+{
   return (
     <Stack.Navigator screenOptions={{
       headerStyle: {
@@ -46,12 +49,14 @@ function CountriesStackScreen ({navigation, route}){
       },
       headerTintColor: '#fff'
     }}>
-    <Stack.Screen name="Countries" component={Countries} initialParams={{
+    <Stack.Screen name="CountriesMain" component={Countries} initialParams={{
       countries: route.params.countries,
-      addcountry: route.params.addcountry}} />
-    <Stack.Screen name="country" component={Country} initialParams={{
+      addCountry: route.params.addCountry,
+      addCurrency: route.params.addCurrency}} />
+    <Stack.Screen name="countrydetails" component={Country} initialParams={{
       countries: route.params.countries,
-      addcountry: route.params.addcountry}}/>
+      addcountry: route.params.addcountry,
+      addCurrency: route.params.addCurrency}}/>
     </Stack.Navigator>
   );
 }
@@ -59,19 +64,21 @@ function CountriesStackScreen ({navigation, route}){
 export default class App extends Component {
   state = {
     cities: [],
-    countries:[]
+    countries:[],
   }
   addCity = (city) => {
-    console.log(city);
+    //console.log(city);
     const cities = this.state.cities
     cities.push(city)
-    this.setState({ cities })
+    this.setState({ cities:cities })
+    //console.log(citiestemp);
   }
   addCountry = (country) => {
     const countries = this.state.countries
     countries.push(country)
-    this.setState({ countries })
+    this.setState({ countries:countries })
   }
+  
   addLocation = (location, city) => {
     const index = this.state.cities.findIndex(item => {
       return item.id === city.id
@@ -87,14 +94,29 @@ export default class App extends Component {
       cities
     })
   }
+  addCurrency = (currency, country) => {
+    const index = this.state.countries.findIndex(item => {
+      return item.id === country.id
+    })
+    const chosenCity = this.state.cities[index]
+    chosenCity.currency.push(currency)
+    const countries = [
+      ...this.state.countries.slice(0, index),
+      chosenCity,
+      ...this.state.countries.slice(index + 1)
+    ]
+    this.setState({
+      countries
+    })
+  }
   render() {
     return (
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Cities" initialParams={{cities: this.state.cities,addCity: this.addCity,addLocation: this.addLocation}} component={CitiesStackScreen} />
           <Tab.Screen name="AddCity"   initialParams={{cities: this.state.cities,addCity: this.addCity,addLocation: this.addLocation}} component={AddCity} />
-          <Tab.Screen name="Countries" initialParams={{countries: this.state.countries,addCountry: this.addCountry}} component={CountriesStackScreen} />
-          <Tab.Screen name="AddCountry"  initialParams={{countries: this.state.countries,addCountry: this.addCountry}} component={AddCountry} />
+          <Tab.Screen name="Countries" initialParams={{countries: this.state.countries,addCountry: this.addCountry,addCurrency:this.addCurrency}} component={CountriesStackScreen} />
+          <Tab.Screen name="AddCountry"  initialParams={{countries: this.state.countries,addCountry: this.addCountry,addCurrency:this.addCurrency}} component={AddCountry} />
         </Tab.Navigator>
       </NavigationContainer>
     );
